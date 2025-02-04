@@ -11,5 +11,9 @@ class Solution:
             reversed_half = reversed_half * 10 + x % 10
             x //= 10
         
-        # Check if the number is a palindrome
-        return x == reversed_half or x == reversed_half // 10
+        # Explicitly check both conditions
+        if x == reversed_half:
+            return True
+        if x == reversed_half // 10:
+            return True
+        return False
