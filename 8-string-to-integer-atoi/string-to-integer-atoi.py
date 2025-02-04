@@ -1,8 +1,8 @@
 class Solution:
     def myAtoi(self, s):
         # Define the 32-bit signed integer limits
-        INT_MAX = 2**31 - 1  # 2147483647
-        INT_MIN = -2**31     # -2147483648
+        INT_MAX = 2147483647
+        INT_MIN = -2147483648
         
         # Initialize variables
         n = len(s)
@@ -15,13 +15,13 @@ class Solution:
             i += 1
         
         # Step 2: Determine the sign
-        if i < n and (s[i] == '+' or s[i] == '-'):
+        if i < n and s[i] in ('-', '+'):
             sign = -1 if s[i] == '-' else 1
             i += 1
         
         # Step 3: Parse digits
-        while i < n and s[i].isdigit():
-            digit = int(s[i])
+        while i < n and '0' <= s[i] <= '9':
+            digit = ord(s[i]) - ord('0')  # Convert char to int
             
             # Check for overflow before updating result
             if result > (INT_MAX - digit) // 10:
