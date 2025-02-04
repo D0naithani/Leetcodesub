@@ -8,8 +8,7 @@ class Solution:
         
         # Reverse half of the digits
         while x > reversed_half:
-            last_digit = x % 10
-            reversed_half = reversed_half * 10 + last_digit
+            reversed_half = reversed_half * 10 + x % 10
             x //= 10
         
         # Check if the number is a palindrome
