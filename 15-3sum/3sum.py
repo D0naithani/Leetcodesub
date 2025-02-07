@@ -3,19 +3,25 @@ class Solution:
         # Sort the array to enable the two-pointer approach
         nums.sort()
         result = []
+        n = len(nums)  # Store the length of the array
         
-        # Iterate through the array, fixing one element at a time
-        for i in range(len(nums) - 2):
+        for i in range(n - 2):
+            # Early termination: If the current number is greater than zero, no triplet can sum to zero
+            if nums[i] > 0:
+                break
+            
             # Skip duplicate values for the first element
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
             
             # Use two pointers to find the other two elements
-            left, right = i + 1, len(nums) - 1
+            left, right = i + 1, n - 1
+            target = -nums[i]  # The target sum for the two-pointer search
+            
             while left < right:
-                total = nums[i] + nums[left] + nums[right]
+                total = nums[left] + nums[right]
                 
-                if total == 0:
+                if total == target:
                     # Found a valid triplet
                     result.append([nums[i], nums[left], nums[right]])
                     
@@ -30,7 +36,7 @@ class Solution:
                     left += 1
                     right -= 1
                 
-                elif total < 0:
+                elif total < target:
                     # Increase the sum by moving the left pointer
                     left += 1
                 else:
