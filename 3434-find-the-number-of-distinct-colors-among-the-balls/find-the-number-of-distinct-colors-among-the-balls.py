@@ -1,28 +1,28 @@
 class Solution:
     def queryResults(self, limit, queries):
-        # Dictionary to track the current color of each ball
-        color_map = {}
-        # Dictionary to track the frequency of each color
-        color_count = {}
-        # List to store the result after each query
-        result = []
+        ball_colors = {}  # To store the color of each ball
+        color_counts = {}  # To count how many balls have each color
+        distinct_colors = set()  # To store the distinct colors
+        result = []  # To store the result after each query
         
         for x, y in queries:
-            # Use local variables to avoid repeated dictionary lookups
-            old_color = color_map.get(x, None)
-            
-            # If the ball already has a color, decrement its count
-            if old_color is not None:
-                color_count[old_color] -= 1
-                if color_count[old_color] == 0:
-                    del color_count[old_color]
-            
+            if x in ball_colors:
+                old_color = ball_colors[x]
+                # Decrement the count for the old color
+                color_counts[old_color] -= 1
+                # If the count drops to 0, remove the color from distinct_colors
+                if color_counts[old_color] == 0:
+                    distinct_colors.discard(old_color)
             # Assign the new color to the ball
-            color_map[x] = y
-            # Increment the count of the new color
-            color_count[y] = color_count.get(y, 0) + 1
-            
+            ball_colors[x] = y
+            # Increment the count for the new color
+            if y in color_counts:
+                color_counts[y] += 1
+            else:
+                color_counts[y] = 1
+            # Add the new color to distinct_colors
+            distinct_colors.add(y)
             # Append the number of distinct colors to the result
-            result.append(len(color_count))
+            result.append(len(distinct_colors))
         
         return result
